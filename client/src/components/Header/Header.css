@@ -1,0 +1,14 @@
+.header-container {
+    display: flex;
+    background: rgb(25, 25, 90);
+    color: white;
+    height: 60px;
+}
+
+.header-container h3 {
+    margin: 0;
+    background: darkgray;
+    width: 120px;
+    height: 30px;
+    align-self: center;
+}

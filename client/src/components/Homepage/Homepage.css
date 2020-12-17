@@ -1,0 +1,11 @@
+.popular-movies-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie-container {
+    margin: 10px;
+    width: 220px;
+}
