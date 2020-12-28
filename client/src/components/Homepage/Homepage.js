@@ -17,9 +17,9 @@ const Homepage = () => {
             <div className="popular-movies-container">
                 {popularMovies.map(movie => {
                     return (
-                        <div className="movie-container">
+                        <div className="movie-container" key={movie.id}>
                             <div className="movie-image-container">
-                                <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`}></img>
+                                <img src={`https://image.tmdb.org/t/p/w200/${movie.poster_path}`} alt="cover"></img>
                             </div>
                             <h3>{movie.title}</h3>
                         </div>
