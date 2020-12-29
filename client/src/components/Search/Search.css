@@ -2,14 +2,20 @@
     position: relative;
 }
 
+
 .search-container {
-    /* display: flex; */
     position: absolute;
-    top: 0px;
-    left: 70px;
+    top: 0;
+    left: -180px;
     height: auto;
     width: 250px;
     background: #232c3b;
+    transition: 0.4s;
+
+}
+
+.search-container.active {
+    left: 70px;
 }
 
 .search-type {
@@ -77,7 +83,7 @@
     margin-top: 30px;
 }
 
-.rating-slider {
+.rating-slider, .year-start, .year-end {
     -webkit-appearance: none;
     width: 200px;
     height: 4px;
@@ -90,14 +96,14 @@
 
 .rating-track-filler {
     position: absolute;
-    top: 88%;
+    top: 90%;
     left: 8%;
     height: 4px;
     width: 3px;
     z-index: 1;
 }
 
-.rating-slider::-webkit-slider-thumb {
+.rating-slider::-webkit-slider-thumb, .year-start::-webkit-slider-thumb, .year-end::-webkit-slider-thumb {
     -webkit-appearance: none;
     position: relative;
     width: 15px;
@@ -106,8 +112,87 @@
     border-radius: 50%;
     cursor: pointer;
     z-index: 5;
-  }
+}
 
+.year-end::-webkit-slider-thumb {
+  background: #6b75fd;
+  z-index: 4
+}
 
+.year-container {
+  height: 90px;
+  position: relative;
+}
 
-  
+.year-start {
+  position: absolute;
+  bottom: 28%;
+  left: 10%;
+}
+
+.year-end {
+  position: absolute;
+  bottom: 28%;
+  left: 10%;
+}
+
+.year-track-filler {
+  position: absolute;
+  top: 65%;
+  left: 15%;
+  height: 4px;
+  width: 1px;
+  background: #959cfb;
+  transform-origin: left;
+  z-index: 1;
+}
+
+.chosen-years {
+    color: #fff;
+    position: absolute;
+    top: 38%;
+    left: 37%;
+}
+
+.countries-container {
+    margin-bottom: 20px;
+}
+
+.countries-select-container {
+    position: relative;
+    background: #414855;
+    margin: 0 30px;
+    text-transform: uppercase;
+    color: #fff;
+    font-size: 13px;
+    font-weight: 200;
+}
+
+.countries-select-container p {
+    padding-top: 6px;
+    margin: 0;
+    border-radius: 7px;
+    height: 23px;
+    cursor: pointer;
+}
+
+.countries-options {
+    position: absolute;
+    width: 100%;
+    height: 0;
+    opacity: 0;
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+    background: #414855;
+    transition: 0.3s ;
+}
+
+.countries-options.active {
+   height: 130px;
+   opacity: 1;
+}
+
+.countries-options option:hover {
+    background: #5b6579;
+    cursor: pointer
+}

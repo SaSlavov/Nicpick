@@ -1,12 +1,14 @@
-import Slider from 'rc-slider';
-import React, { useRef, useState } from 'react';
-import { ACTION, COMEDY, ROMANCE, THRILLER } from '../../apis/common/genres';
+import React, { useEffect, useRef, useState } from 'react';
 import './Search.css'
 
-const Search = () => {
-    const [genres, setGenres] = useState([])
-    const [rating, setRating] = useState(0)
-    const ratingProgress = useRef()
+const Search = ({active}) => {
+    const [genres, setGenres] = useState([]);
+    const [rating, setRating] = useState(0);
+    const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2020", left: "11" })
+    const searchContainer = useRef()
+    const ratingProgress = useRef();
+    const yearProgress = useRef();
+    const countriesRef = useRef();
 
     const slideRating = (e) => {
         let value = e.target.value
@@ -14,9 +16,29 @@ const Search = () => {
         setRating(e.target.value)
     }
 
+    const slideYear = (value, prop) => {
+        if (prop === 'start') {
+            if (value > yearsRange.end) {
+                return;
+            }
+            setYearsRange({ ...yearsRange, [prop]: value, "left": (value - 1950) + 15 })
+        } else {
+            if (value < yearsRange.start) {
+                return;
+            }
+            setYearsRange({ ...yearsRange, [prop]: value })
+        }
+
+        let scale = ((((prop === "end" ? value : yearsRange.end) - (prop === "start" ? value : yearsRange.start)) / 70) * 185)
+        yearProgress.current.style = `left: ${yearsRange.left}%; width: ${scale}px;`;
+    }
+
+    useEffect(() => {
+        slideYear(yearsRange.start, 'start')
+    }, [])
     return (
         <div className="search-relative-container">
-            <div className="search-container" onChange={(e) => setGenres([...genres, e.target.value])}>
+            <div className={`search-container ${active && "active"}`} >
                 <p className="search-type">Movies</p>
                 <div className="genres-container">
                     <p className="filter-title">Genres</p>
@@ -41,13 +63,30 @@ const Search = () => {
                     </div>
                     <div className="rating-track-filler" ref={ratingProgress} ></div>
                 </div>
+                <div className="year-container">
+                    <p className="filter-title">Release Year</p>
+                    <div className="year-track-filler" ref={yearProgress} ></div>
+                    <input type="range" className="year-start" min="1950" max="2020" value={yearsRange.start} onChange={(e) => slideYear(e.target.value, 'start')}></input>
+                    <input type="range" className="year-end" min="1950" max="2020" value={yearsRange.end} onChange={(e) => slideYear(e.target.value, 'end')}></input>
+                    <span className="chosen-years">{yearsRange.start}/{yearsRange.end}</span>
+                </div>
 
-                <select>
-                    <option value={COMEDY} >Comedy</option>
-                    <option value={ROMANCE}>Romance</option>
-                    <option value={ACTION}>Action</option>
-                    <option value={THRILLER}>Thriller</option>
-                </select>
+                <div className="countries-container">
+                    <p className="filter-title">Countries</p>
+                    <div className="countries-select-container">
+                        <p onClick={() => countriesRef.current && countriesRef.current.classList.toggle('active')}>Filter By Country</p>
+                        <div ref={countriesRef} className="countries-options">
+                            <option value="usa" >USA</option>
+                            <option value="uk">UK</option>
+                            <option value="spain">Spain</option>
+                            <option value="turkey">Turkey</option>
+                            <option value="south-korea">South Korea</option>
+                            <option value="japan">Japan</option>
+                            <option value="russia">Russia</option>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
     );

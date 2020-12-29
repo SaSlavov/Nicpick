@@ -1,8 +1,10 @@
 .header-container {
     display: flex;
+    position: fixed;
     background: #151c29;
     color: white;
     height: 60px;
+    width: 100vw;
 }
 
 .header-container h3 {

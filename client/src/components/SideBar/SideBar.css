@@ -1,5 +1,26 @@
 .sidebar-container {
     width: 70px;
-    height: 100vh;
+    height: 100%;
     background: #151c29;
+    position: fixed;
+    top: 60px;
+}
+
+.sidebar-buttons {
+    position: absolute;
+    height: 680px;
+    width: 70px;
+    background:#151c29;
+    z-index: 100;
+}
+
+.film-svg-container {
+    background: #4e30d6;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.film-svg {
+    fill: #fff;
 }
