@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { connect } from 'react-redux';
 import './Search.css'
+import { filterGenres } from '../../actions'
+import { ACTION, ADVENTURE, ANIMATION, COMEDY, CRIME, DRAMA, FAMILY, FANTASY, GENRES, HORROR, ROMANCE, SCIENCE_FICTION } from '../../apis/common/genres.js'
 
-const Search = ({active}) => {
-    const [genres, setGenres] = useState([]);
+
+const Search = ({active, search, filterGenres}) => {
     const [rating, setRating] = useState(0);
     const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2020", left: "11" })
-    const searchContainer = useRef()
     const ratingProgress = useRef();
     const yearProgress = useRef();
     const countriesRef = useRef();
@@ -42,17 +44,14 @@ const Search = ({active}) => {
                 <p className="search-type">Movies</p>
                 <div className="genres-container">
                     <p className="filter-title">Genres</p>
-                    <p className="genres-type">Action</p>
-                    <p className="genres-type">Adventure</p>
-                    <p className="genres-type">Animation</p>
-                    <p className="genres-type">Comedy</p>
-                    <p className="genres-type">Crime</p>
-                    <p className="genres-type">Drama</p>
-                    <p className="genres-type">Family</p>
-                    <p className="genres-type">Fantasy</p>
-                    <p className="genres-type">Horror</p>
-                    <p className="genres-type">Romance</p>
-                    <p className="genres-type">Science fiction</p>
+
+                    {GENRES.map( genre => {
+                        return (
+                            <p className={`genres-type ${search.genres.some(el => el === genre.code) ? 'active' : ''}`}
+                                onClick={() => filterGenres(genre.code)}
+                            >{genre.name}</p>
+                        )
+                    })}
                 </div>
                 <div className="rating-container">
                     <p className="filter-title">Rating</p>
@@ -92,4 +91,13 @@ const Search = ({active}) => {
     );
 };
 
-export default Search;
+const mapStateToProps = (state) => {
+    return {
+        search: state.search
+    }
+}
+
+export default connect(
+    mapStateToProps,
+    { filterGenres }
+)(Search);

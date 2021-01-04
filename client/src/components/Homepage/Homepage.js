@@ -5,10 +5,11 @@ import './Homepage.css'
 const Homepage = () => {
 
     const [popularMovies, setPopularMovies] = useState(null)
-    console.log(popularMovies)
+    // console.log(popularMovies)
 
     useEffect(() => {
         movies.get(`discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
+        // movies.get(`discover/movie?language=tr&with_original_language=tr&page=1`)
             .then(res => setPopularMovies(res.data.results))
     }, [])
 
@@ -30,7 +31,7 @@ const Homepage = () => {
     }
 
     return (
-        <div>
+        <div className="homepage-container">
             {popularMovies && returnPopularMovies()}
         </div>
     );
