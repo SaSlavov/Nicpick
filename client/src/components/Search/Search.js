@@ -5,7 +5,7 @@ import { filterGenres, filterByRating, filterByYear, filterByCountry } from '../
 import { GENRES } from '../../apis/common/genres.js'
 
 
-const Search = ({active, search, filterGenres, filterByRating, filterByYear, filterByCountry}) => {
+const Search = ({active, search, searchType, filterGenres, filterByRating, filterByYear, filterByCountry}) => {
     const [rating, setRating] = useState(0);
     const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2021", left: "11" })
     const ratingProgress = useRef();
@@ -41,7 +41,7 @@ const Search = ({active, search, filterGenres, filterByRating, filterByYear, fil
     return (
         <div className="search-relative-container">
             <div className={`search-container ${active && "active"}`} >
-                <p className="search-type">Movies</p>
+                <p className="search-type">{searchType.type}</p>
                 <div className="genres-container">
                     <p className="filter-title">Genres</p>
 
@@ -92,6 +92,7 @@ const Search = ({active, search, filterGenres, filterByRating, filterByYear, fil
 
 const mapStateToProps = (state) => {
     return {
+        searchType: state.activeSearch,
         search: state.search
     }
 }

@@ -3,15 +3,26 @@ import { connect } from 'react-redux';
 import movies from '../../apis/tmbd.js'
 import './Homepage.css'
 
-const Homepage = React.memo(({search}) => {
+const Homepage = React.memo(({search, searchType}) => {
     const [popularMovies, setPopularMovies] = useState(null)
+    console.log(popularMovies)
 
     useEffect(() => {
+        console.log('in useEffect')
+        console.log(searchType)
         // movies.get(`discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-        movies.get(`discover/movie?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
-        // movies.get(`discover/movie?with_original_language=tr&page=1`)
+
+        if (searchType.type === 'movie') {
+            console.log('in movies')
+            movies.get(`discover/movie?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
             .then(res => setPopularMovies(res.data.results))
-    }, [search])
+        }else if (searchType.type === 'tv') {
+            console.log('in tv')
+            movies.get(`discover/tv?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
+            .then(res => setPopularMovies(res.data.results))
+        }
+        // movies.get(`discover/movie?with_original_language=tr&page=1`)
+    }, [search, searchType])
 
     const returnPopularMovies = () => {
         return (
@@ -39,6 +50,7 @@ const Homepage = React.memo(({search}) => {
 
 const mapStateToProps = (state) => {
     return {
+        searchType: state.activeSearch,
         search: state.search,
     }
 }

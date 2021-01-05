@@ -15,12 +15,69 @@
 }
 
 .film-svg-container {
-    background: #4e30d6;
+    position: relative;
+    /* background: #4e30d6; */
     width: 70px;
     height: 70px;
     cursor: pointer;
 }
 
-.film-svg {
+/* .film-svg-container:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #4e30d6;
+    transform-origin: bottom;
+    transform: scaleY(0);
+    transition: 0.3s ease-in-out;
+    z-index: -1;
+}
+
+.film-svg-container.up:before{
+    transform: scaleY(1);
+} */
+
+
+
+.tv-svg-container {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+}
+
+.tv-svg-container:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #4e30d6;
+    transition: 0.3s ease-in-out;
+    z-index: -100;
+}
+
+.tv-svg-container.before:before{
+    top: -100%;
+}
+.tv-svg-container.after:before{
+    top: 100%;
+}
+
+.heart-svg-container {
+    position: relative;
+    width: 70px;
+    height: 70px;
+    cursor: pointer;
+    /* background: #4e30d6; */
+
+}
+
+
+.film-svg, .tv-svg, .heart-svg {
     fill: #fff;
 }

@@ -1,6 +1,11 @@
 import { SEARCH_MOVIES, SEARCH_SERIES } from "../actions/types";
 
-export default ( state = {}, action ) => {
+const initialState = {
+    type: 'movie',
+    active: false
+}
+
+export default ( state = initialState, action ) => {
     switch (action.type) {
         case SEARCH_MOVIES:
             return action.payload;
