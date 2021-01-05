@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { connect } from 'react-redux';
 import movies from '../../apis/tmbd.js'
 import './Homepage.css'
 
-const Homepage = () => {
-
+const Homepage = React.memo(({search}) => {
     const [popularMovies, setPopularMovies] = useState(null)
-    // console.log(popularMovies)
 
     useEffect(() => {
-        movies.get(`discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-        // movies.get(`discover/movie?language=tr&with_original_language=tr&page=1`)
+        // movies.get(`discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
+        movies.get(`discover/movie?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
+        // movies.get(`discover/movie?with_original_language=tr&page=1`)
             .then(res => setPopularMovies(res.data.results))
-    }, [])
+    }, [search])
 
     const returnPopularMovies = () => {
         return (
@@ -35,6 +35,14 @@ const Homepage = () => {
             {popularMovies && returnPopularMovies()}
         </div>
     );
-};
+});
 
-export default Homepage;
+const mapStateToProps = (state) => {
+    return {
+        search: state.search,
+    }
+}
+
+export default connect(
+    mapStateToProps,
+)(Homepage);

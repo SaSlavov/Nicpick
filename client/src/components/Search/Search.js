@@ -1,13 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import './Search.css'
-import { filterGenres } from '../../actions'
-import { ACTION, ADVENTURE, ANIMATION, COMEDY, CRIME, DRAMA, FAMILY, FANTASY, GENRES, HORROR, ROMANCE, SCIENCE_FICTION } from '../../apis/common/genres.js'
+import { filterGenres, filterByRating, filterByYear, filterByCountry } from '../../actions'
+import { GENRES } from '../../apis/common/genres.js'
 
 
-const Search = ({active, search, filterGenres}) => {
+const Search = ({active, search, filterGenres, filterByRating, filterByYear, filterByCountry}) => {
     const [rating, setRating] = useState(0);
-    const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2020", left: "11" })
+    const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2021", left: "11" })
     const ratingProgress = useRef();
     const yearProgress = useRef();
     const countriesRef = useRef();
@@ -58,15 +58,15 @@ const Search = ({active, search, filterGenres}) => {
                     <p className="rating-value">{rating}</p>
                     <p className="imdb">imdb</p>
                     <div className="slider-container">
-                        <input className="rating-slider" type="range" min="0" max="10" step="0.5" value={rating} onChange={(e) => slideRating(e)}></input>
+                        <input className="rating-slider" type="range" min="0" max="10" step="0.5" value={rating} onChange={(e) => slideRating(e)} onMouseUp={(e) => filterByRating(e.target.value)}></input>
                     </div>
                     <div className="rating-track-filler" ref={ratingProgress} ></div>
                 </div>
                 <div className="year-container">
                     <p className="filter-title">Release Year</p>
                     <div className="year-track-filler" ref={yearProgress} ></div>
-                    <input type="range" className="year-start" min="1950" max="2020" value={yearsRange.start} onChange={(e) => slideYear(e.target.value, 'start')}></input>
-                    <input type="range" className="year-end" min="1950" max="2020" value={yearsRange.end} onChange={(e) => slideYear(e.target.value, 'end')}></input>
+                    <input type="range" className="year-start" min="1950" max="2021" value={yearsRange.start} onChange={(e) => slideYear(e.target.value, 'start')} onMouseUp={(e) => filterByYear(['start', e.target.value])}></input>
+                    <input type="range" className="year-end" min="1950" max="2021" value={yearsRange.end} onChange={(e) => slideYear(e.target.value, 'end')} onMouseUp={(e) => filterByYear(['end', e.target.value])}></input>
                     <span className="chosen-years">{yearsRange.start}/{yearsRange.end}</span>
                 </div>
 
@@ -75,13 +75,12 @@ const Search = ({active, search, filterGenres}) => {
                     <div className="countries-select-container">
                         <p onClick={() => countriesRef.current && countriesRef.current.classList.toggle('active')}>Filter By Country</p>
                         <div ref={countriesRef} className="countries-options">
-                            <option value="usa" >USA</option>
-                            <option value="uk">UK</option>
-                            <option value="spain">Spain</option>
-                            <option value="turkey">Turkey</option>
-                            <option value="south-korea">South Korea</option>
-                            <option value="japan">Japan</option>
-                            <option value="russia">Russia</option>
+                            <option value="usa" onClick={() => filterByCountry("en")}>USA</option>
+                            <option value="spain" onClick={() => filterByCountry("es")}>Spain</option>
+                            <option value="turkey" onClick={() => filterByCountry("tr")}>Turkey</option>
+                            <option value="south-korea" onClick={() => filterByCountry("ko")}>South Korea</option>
+                            <option value="japan" onClick={() => filterByCountry("ja")}>Japan</option>
+                            <option value="russia" onClick={() => filterByCountry("ru")}>Russia</option>
                         </div>
                     </div>
 
@@ -99,5 +98,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    { filterGenres }
+    { filterGenres, filterByRating, filterByYear, filterByCountry }
 )(Search);
