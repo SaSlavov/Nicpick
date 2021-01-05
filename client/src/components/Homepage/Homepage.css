@@ -1,15 +1,27 @@
 .homepage-container {
     display: flex;
-    height: 100vh;
+    height: 94vh;
     overflow-y: scroll;
+    overflow-x: hidden;
+    background: #182130;
 }
 
 
 .popular-movies-container{
     display: flex;
+    position: relative;
+    top: 5%;
+    left: 40px;
+    width: 100vw;
+    transition: 0.3s;
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+}
+
+.popular-movies-container.slide-right{
+    left: 280px;
+    width: 80vw;
 }
 
 .movie-container {

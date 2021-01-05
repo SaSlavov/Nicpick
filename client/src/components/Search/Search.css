@@ -7,15 +7,36 @@
     position: absolute;
     top: 0;
     left: -180px;
-    height: auto;
+    height: 93vh;
     width: 250px;
     background: #232c3b;
-    transition: 0.4s;
+    transition: 0.3s;
+    z-index: 1;
+    overflow-y: scroll;
+}
 
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #1d2738;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #959cfb;
+    height: 40px;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background:  #6b75fd;
 }
 
 .search-container.active {
     left: 70px;
+    box-shadow: 0px 3px 10px 2px black;
+    z-index: 100;
 }
 
 .search-type {

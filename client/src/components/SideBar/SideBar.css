@@ -4,11 +4,12 @@
     background: #151c29;
     position: absolute;
     top: 60px;
+    box-shadow: 2px 7px 10px 2px rgba(0, 0, 0, 0.658);
 }
 
 .sidebar-buttons {
     position: absolute;
-    height: 680px;
+    height: 100vh;
     width: 70px;
     background:#151c29;
     z-index: 100;

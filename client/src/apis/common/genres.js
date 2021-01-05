@@ -18,4 +18,4 @@ export const THRILLER = {code: '53', name: 'thriller'};
 export const WAR = {code: '10752', name: 'war'};
 export const WESTERN = {code: '37', name: 'western'};
 
-export const GENRES = [ACTION, ADVENTURE, ANIMATION, COMEDY, CRIME, DRAMA, FAMILY, FANTASY, HORROR, ROMANCE, SCIENCE_FICTION]
+export const GENRES = [ACTION, ADVENTURE, ANIMATION, COMEDY, CRIME, DRAMA, FAMILY, FANTASY, HORROR, HISTORY, ROMANCE, SCIENCE_FICTION]
