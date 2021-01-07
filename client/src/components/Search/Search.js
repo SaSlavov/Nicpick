@@ -3,14 +3,24 @@ import { connect } from 'react-redux';
 import './Search.css'
 import { filterGenres, filterByRating, filterByYear, filterByCountry } from '../../actions'
 import { GENRES } from '../../apis/common/genres.js'
+import Dropdown from './SearchComponents/Dropdown/Dropdown';
 
 
-const Search = ({active, search, searchType, filterGenres, filterByRating, filterByYear, filterByCountry}) => {
+const Search = ({ active, search, searchType, filterGenres, filterByRating, filterByYear, filterByCountry }) => {
     const [rating, setRating] = useState(0);
     const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2021", left: "11" })
     const ratingProgress = useRef();
     const yearProgress = useRef();
-    const countriesRef = useRef();
+    // const countriesRef = useRef();
+
+    const countries = [
+        { data: "en", name: "USA" },
+        { data: "es", name: "Spain" },
+        { data: "tr", name: "Turkey" },
+        { data: "ko", name: "South Korea" },
+        { data: "ja", name: "Japan" },
+        { data: "ru", name: "Russia" }
+    ]
 
     const slideRating = (e) => {
         let value = e.target.value
@@ -45,9 +55,9 @@ const Search = ({active, search, searchType, filterGenres, filterByRating, filte
                 <div className="genres-container">
                     <p className="filter-title">Genres</p>
 
-                    {GENRES.map( genre => {
+                    {GENRES.map((genre, index) => {
                         return (
-                            <p className={`genres-type ${search.genres.some(el => el === genre.code) ? 'active' : ''}`}
+                            <p key={index} className={`genres-type ${search.genres.some(el => el === genre.code) ? 'active' : ''}`}
                                 onClick={() => filterGenres(genre.code)}
                             >{genre.name}</p>
                         )
@@ -69,21 +79,9 @@ const Search = ({active, search, searchType, filterGenres, filterByRating, filte
                     <input type="range" className="year-end" min="1950" max="2021" value={yearsRange.end} onChange={(e) => slideYear(e.target.value, 'end')} onMouseUp={(e) => filterByYear(['end', e.target.value])}></input>
                     <span className="chosen-years">{yearsRange.start}/{yearsRange.end}</span>
                 </div>
-
                 <div className="countries-container">
                     <p className="filter-title">Countries</p>
-                    <div className="countries-select-container">
-                        <p onClick={() => countriesRef.current && countriesRef.current.classList.toggle('active')}>Filter By Country</p>
-                        <div ref={countriesRef} className="countries-options">
-                            <option value="usa" onClick={() => filterByCountry("en")}>USA</option>
-                            <option value="spain" onClick={() => filterByCountry("es")}>Spain</option>
-                            <option value="turkey" onClick={() => filterByCountry("tr")}>Turkey</option>
-                            <option value="south-korea" onClick={() => filterByCountry("ko")}>South Korea</option>
-                            <option value="japan" onClick={() => filterByCountry("ja")}>Japan</option>
-                            <option value="russia" onClick={() => filterByCountry("ru")}>Russia</option>
-                        </div>
-                    </div>
-
+                    <Dropdown name="countries" items={countries} action={filterByCountry} />
                 </div>
             </div>
         </div>

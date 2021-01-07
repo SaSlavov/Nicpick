@@ -4,6 +4,8 @@
     overflow-y: scroll;
     overflow-x: hidden;
     background: #182130;
+    position: relative;
+    padding-top: 20px;
 }
 
 
@@ -13,15 +15,19 @@
     top: 5%;
     left: 40px;
     width: 100vw;
+    height: auto;
     transition: 0.3s;
     flex-direction: row;
     flex-wrap: wrap;
-    justify-content: center;
+    justify-content: space-around;
+    padding-right: 40px;
+    box-sizing: border-box;
 }
 
 .popular-movies-container.slide-right{
-    left: 280px;
+    left: 300px;
     width: 80vw;
+
 }
 
 .movie-container {
@@ -29,3 +35,9 @@
     width: 220px;
 }
 
+.sortBy-container {
+    position: absolute;
+    top: 0;
+    right: 1%;
+    padding-top: 20px;
+}

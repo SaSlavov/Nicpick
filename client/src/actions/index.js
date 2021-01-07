@@ -1,4 +1,4 @@
-import { FILTER_GENRES, FILTER_RATING, SEARCH_MOVIES, SEARCH_SERIES, FILTER_YEAR, FILTER_COUNTRY } from "./types"
+import { FILTER_GENRES, FILTER_RATING, SEARCH_MOVIES, SEARCH_SERIES, FILTER_YEAR, FILTER_COUNTRY, SORT_BY, SET_RESULT } from "./types"
 
 export const searchMovies = (data) => {
     return {
@@ -37,6 +37,20 @@ export const filterByYear = (data) => {
 export const filterByCountry = (data) => {
     return {
         type: FILTER_COUNTRY,
+        payload: data
+    }
+}
+
+export const sortBy = (data) => {
+    return {
+        type: SORT_BY,
+        payload: data
+    }
+}
+
+export const setResult = (data) => {
+    return {
+        type: SET_RESULT,
         payload: data
     }
 }

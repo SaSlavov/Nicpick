@@ -1,32 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
-import movies from '../../apis/tmbd.js'
+import query from '../../apis/tmbd.js'
+import Dropdown from '../Search/SearchComponents/Dropdown/Dropdown.js';
+import { sortBy, setResult } from '../../actions/'
 import './Homepage.css'
 
-const Homepage = React.memo(({search, searchType}) => {
-    const [popularMovies, setPopularMovies] = useState(null)
+const Homepage = React.memo(({ search, searchType, sortBy, setResult, result }) => {
+    // const [result, setResult] = useState(null)
     // console.log(popularMovies)
 
     useEffect(() => {
-        // console.log('in useEffect')
-        // console.log(searchType)
-        // movies.get(`discover/movie?language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=1`)
-
         if (searchType.type === 'movie') {
             console.log('in movies')
-            movies.get(`discover/movie?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
-            .then(res => setPopularMovies(res.data.results))
-        }else if (searchType.type === 'tv') {
+            query.get(`discover/movie?vote_count.gte=50&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=2&sort_by=${search.sortBy}`)
+                .then(res => setResult(res.data))
+        } else if (searchType.type === 'tv') {
             console.log('in tv')
-            movies.get(`discover/tv?vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1`)
-            .then(res => setPopularMovies(res.data.results))
+            query.get(`discover/tv?vote_count.gte=50&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=1&sort_by=${search.sortBy}`)
+                .then(res => setResult(res.data))
         }
     }, [search, searchType])
 
-    const returnPopularMovies = () => {
+    const returnResult = () => {
         return (
-            <div className={`popular-movies-container ${searchType.active ? 'slide-right': ''}`}>
-                {popularMovies.map(movie => {
+            <div className={`popular-movies-container ${searchType.active ? 'slide-right' : ''}`}>
+                {result.map(movie => {
                     return (
                         <div className="movie-container" key={movie.id}>
                             <div className="movie-image-container">
@@ -42,7 +40,12 @@ const Homepage = React.memo(({search, searchType}) => {
 
     return (
         <div className="homepage-container">
-            {popularMovies && returnPopularMovies()}
+            <div>
+                <div className="sortBy-container">
+                    <Dropdown name="sorting" items={[{ data: "popularity.desc", name: "Popularity Desc." }, { data: "popularity.asc", name: "Popularity Asc." }, { data: "vote_average.desc", name: "Rating Desc." }, { data: "vote_average.asc", name: "Rating Asc." }]} action={sortBy}/>
+                </div>
+            </div>
+            {result && returnResult()}
         </div>
     );
 });
@@ -51,9 +54,11 @@ const mapStateToProps = (state) => {
     return {
         searchType: state.activeSearch,
         search: state.search,
+        result: state.result.results
     }
 }
 
 export default connect(
     mapStateToProps,
+    { sortBy, setResult }
 )(Homepage);

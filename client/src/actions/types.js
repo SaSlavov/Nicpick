@@ -3,4 +3,6 @@ export const SEARCH_SERIES = 'SEARCH_SERIES';
 export const FILTER_GENRES = 'FILTER_GENRES';
 export const FILTER_RATING = 'FILTER_RATING';
 export const FILTER_YEAR = 'FILTER_YEAR';
-export const FILTER_COUNTRY = 'FILTER_COUNTRY'
+export const FILTER_COUNTRY = 'FILTER_COUNTRY';
+export const SORT_BY = 'SORT_BY';
+export const SET_RESULT = 'SET_RESULT';
