@@ -4,7 +4,8 @@
     background: #151c29;
     position: absolute;
     top: 60px;
-    box-shadow: 2px 7px 10px 2px rgba(0, 0, 0, 0.658);
+    box-shadow: 2px 7px 10px 2px rgba(0, 0, 0, 0.788);
+    z-index: 2;
 }
 
 .sidebar-buttons {
@@ -22,26 +23,6 @@
     height: 70px;
     cursor: pointer;
 }
-
-/* .film-svg-container:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #4e30d6;
-    transform-origin: bottom;
-    transform: scaleY(0);
-    transition: 0.3s ease-in-out;
-    z-index: -1;
-}
-
-.film-svg-container.up:before{
-    transform: scaleY(1);
-} */
-
-
 
 .tv-svg-container {
     position: relative;
