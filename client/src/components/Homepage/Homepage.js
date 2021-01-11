@@ -14,11 +14,11 @@ const Homepage = React.memo(({ search, searchType, sortBy, setResult, result, op
     useEffect(() => {
         if (searchType.type === 'movie') {
             console.log('in movies')
-            query.get(`discover/movie?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
+            query.get(`discover/movie?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.include.join(',')}&without_genres=${search.genres.exclude.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
                 .then(res => setResult(res.data))
         } else if (searchType.type === 'tv') {
             console.log('in tv')
-            query.get(`discover/tv?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
+            query.get(`discover/tv?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.include.join(',')}&without_genres=${search.genres.exclude.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
                 .then(res => setResult(res.data))
         }
     }, [search, searchType, page])

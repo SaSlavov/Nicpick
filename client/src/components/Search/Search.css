@@ -42,6 +42,14 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.384);
 }
 
+.genre-container {
+    position: relative;
+}
+
+.genre-container:hover {
+    background: #636e83;
+}
+
 .genres-type {
     margin: 0;
     color: #fff;
@@ -54,12 +62,25 @@
     padding-bottom: 5px;
 }
 
-.genres-type.active {
+.genres-type.include {
     background:  rgba(255, 255, 255, 0.082);
 }
 
-.genres-type:hover {
-    background: #636e83;
+.genres-type.exclude {
+    background: #9f5e64;
+}
+
+
+.exclude-genre-button {
+    position: absolute;
+    top: 15%;
+    right: 2%;
+    margin: 0;
+    width: 10px;
+    color: #fff;
+    font-weight: 500;
+    font-size: 12px;
+    cursor: pointer;
 }
 
 .rating-container {

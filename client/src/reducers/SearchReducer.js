@@ -1,7 +1,7 @@
 import { FILTER_COUNTRY, FILTER_GENRES, FILTER_RATING, FILTER_YEAR, SORT_BY } from "../actions/types";
 
 const initialState = {
-    genres: [],
+    genres: {include: [], exclude: []},
     rating: 0,
     year: { start: '1950', end: '2021' },
     country: "en",
@@ -11,7 +11,8 @@ const initialState = {
 export default (state = initialState, action) => {
     switch (action.type) {
         case FILTER_GENRES:
-            let genres = state.genres.some(genre => genre === action.payload) ? state.genres.filter(genre => genre !== action.payload) : [...state.genres, action.payload];
+            let [code, type] = action.payload;
+            let genres = { ...state.genres, [type]: state.genres[type].some(genre => genre === code) ? state.genres[type].filter(genre => genre !== code) : [...state.genres[type], code]};
             return { ...state, "genres": genres };
         case FILTER_RATING:
             return { ...state, "rating": action.payload };

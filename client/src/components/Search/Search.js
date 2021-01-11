@@ -9,6 +9,7 @@ import Dropdown from './SearchComponents/Dropdown/Dropdown';
 const Search = ({ active, search, searchType, filterGenres, filterByRating, filterByYear, filterByCountry }) => {
     const [rating, setRating] = useState(0);
     const [yearsRange, setYearsRange] = useState({ start: "1950", end: "2021", left: "11" })
+    const [showGenreExclude, setShowGenreExclude] = useState(false)
     const ratingProgress = useRef();
     const yearProgress = useRef();
     // const countriesRef = useRef();
@@ -57,9 +58,12 @@ const Search = ({ active, search, searchType, filterGenres, filterByRating, filt
 
                     {GENRES.map((genre, index) => {
                         return (
-                            <p key={index} className={`genres-type ${search.genres.some(el => el === genre.code) ? 'active' : ''}`}
-                                onClick={() => filterGenres(genre.code)}
-                            >{genre.name}</p>
+                            <div className="genre-container" onMouseEnter={() => setShowGenreExclude({index: index})} onMouseLeave={() => setShowGenreExclude(false)}>
+                                <p key={index} className={`genres-type ${search.genres.include.some(el => el === genre.code) ? 'include' : search.genres.exclude.some(el => el === genre.code) ? 'exclude' : ''}`}
+                                    onClick={() => !(search.genres.exclude.some(el => el === genre.code)) && filterGenres([genre.code, 'include'])}
+                                >{genre.name}</p>
+                                {showGenreExclude && showGenreExclude.index === index && !search.genres.include.some(el => el === genre.code) &&  <p className="exclude-genre-button"  onClick={() => !(search.genres.include.some(el => el === genre.code)) && filterGenres([genre.code, 'exclude'])}>X</p>}
+                            </div>
                         )
                     })}
                 </div>
