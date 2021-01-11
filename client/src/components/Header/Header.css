@@ -3,6 +3,8 @@
     position: relative;
     background: #0f1828;
     color: white;
+    flex-direction: row;
+    /* justify-content: flex-start; */
     height: 60px;
     width: 100vw;
     box-shadow: 20px 3px 10px 2px rgba(0, 0, 0, 0.534);
@@ -15,4 +17,35 @@
     width: 120px;
     height: 30px;
     align-self: center;
+}
+
+.search-input-container {
+    /* background-color: azure; */
+}
+
+.magnifying-glass-svg {
+    /* fill: rgb(185, 23, 23); */
+    fill: #fff;
+}
+
+.magnifying-glass-svg-container {
+    position: relative;
+    top: 25%;
+    cursor: pointer;
+}
+
+.search-input {
+    position: relative;
+    top: 15%;
+    margin-left: 15px;
+    margin-right: 5px;
+    height: 70%;
+    width: 250px;
+    color: #fff;
+    box-shadow: none;
+    background: #0f1828;
+    border-color: #0f1828;
+    border: 0;
+    font-size: 18px;
+    outline: none;
 }
