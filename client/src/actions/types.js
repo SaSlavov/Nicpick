@@ -7,3 +7,4 @@ export const FILTER_COUNTRY = 'FILTER_COUNTRY';
 export const SORT_BY = 'SORT_BY';
 export const SET_RESULT = 'SET_RESULT';
 export const OPEN_INFO = 'OPEN_INFO';
+export const SET_PAGE = 'SET_PAGE';
