@@ -2,26 +2,17 @@ import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
 import query from '../../apis/tmbd.js'
 import Dropdown from '../Search/SearchComponents/Dropdown/Dropdown.js';
-import { sortBy, setResult, openInfo } from '../../actions/'
+import { sortBy, setResult, openInfo, setPage } from '../../actions/'
 import './Homepage.css'
 import { GENRES } from '../../apis/common/genres.js';
 
-const Homepage = React.memo(({ search, searchType, sortBy, setResult, result, openInfo, showInfo }) => {
-    const [page, setPage] = useState(1)
+const Homepage = React.memo(({ search, searchType, sortBy, setResult, result, openInfo, showInfo, page, setPage }) => {
     const showInfoRef = useRef()
 
-
     useEffect(() => {
-        if (searchType.type === 'movie') {
-            console.log('in movies')
-            query.get(`discover/movie?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.include.join(',')}&without_genres=${search.genres.exclude.join(',')}&primary_release_date.gte=${search.year.start}-01-01&primary_release_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
-                .then(res => setResult(res.data))
-        } else if (searchType.type === 'tv') {
-            console.log('in tv')
-            query.get(`discover/tv?vote_count.gte=${search.sortBy.split('.')[0] === 'vote_average' ? '50' : '0'}&vote_average.gte=${Number(search.rating)}&with_genres=${search.genres.include.join(',')}&without_genres=${search.genres.exclude.join(',')}&first_air_date.gte=${search.year.start}-01-01&first_air_date.lte=${search.year.end}-12-31&with_original_language=${search.country}&page=${page}&sort_by=${search.sortBy}`)
-                .then(res => setResult(res.data))
-        }
-    }, [search, searchType, page])
+        setResult([search, searchType.type, page])
+
+    }, [search, searchType.type, page])
 
     const returnGenres = (genreIds) => {
         return GENRES.reduce((acc, el) => {
@@ -42,11 +33,11 @@ const Homepage = React.memo(({ search, searchType, sortBy, setResult, result, op
 
         }
 
-        return pages.map(el => {
+        return pages.map((el, index) => {
             if (el === page) {
-                return <p className="current-page">{el}</p>
+                return <p key={index} className="current-page">{el}</p>
             } else {
-                return <p className="pages-p" onClick={() => setPage(el)}>{el}</p>
+                return <p key={index} className="pages-p" onClick={() => setPage(el)}>{el}</p>
             }
         })
 
@@ -65,23 +56,23 @@ const Homepage = React.memo(({ search, searchType, sortBy, setResult, result, op
                                 </div>
                                 <div>
                                     <p className="cover-title">{movie.title ? movie.title : movie.name}</p>
-                                    <p className="cover-year">{movie.release_date ? movie.release_date.split('-')[0] : movie.first_air_date.split('-')[0]}</p>
+                                    <p className="cover-year">{ movie.release_date && movie.release_date.length > 0 ? movie.release_date.split('-')[0] : movie.first_air_date && movie.first_air_date.length > 0 ? movie.first_air_date.split('-')[0] : ''}</p>
                                 </div>
                             </div>
                             <div ref={showInfoRef} className={`more-info-container ${showInfo && showInfo.id === movie.id ? 'active' : ''}`} style={{ backgroundImage: `url(https://image.tmdb.org/t/p/w780/${movie.backdrop_path})`, backgroundSize: "cover", backgroundRepeat: 'no-repeat', }}>
                                 <div className="shadow-effect">
                                     {showInfo && showInfo.id === movie.id &&
-                                    <div className="general-info-container">
-                                        <p className="general-info-title">{showInfo.title ? showInfo.title : showInfo.name}</p>
-                                        <div className="year-genre-container">
-                                            <p className="general-info-year">{showInfo.release_date ? showInfo.release_date.split('-')[0] : showInfo.first_air_date.split('-')[0]}</p>
-                                            <p className="general-info-genre">{returnGenres(showInfo.genre_ids)}</p>
+                                        <div className="general-info-container">
+                                            <p className="general-info-title">{showInfo.title ? showInfo.title : showInfo.name}</p>
+                                            <div className="year-genre-container">
+                                                <p className="general-info-year">{ movie.release_date && movie.release_date.length > 0 ? movie.release_date.split('-')[0] : movie.first_air_date && movie.first_air_date.length > 0 ? movie.first_air_date.split('-')[0] : ''}</p>
+                                                <p className="general-info-genre">{returnGenres(showInfo.genre_ids)}</p>
+                                            </div>
+                                            <p className="general-info-overview">{showInfo.overview}</p>
+                                            <p className="general-info-rating">IMDB {showInfo.vote_average}</p>
+                                            <p className="general-info-add-favorites">add to favorites</p>
                                         </div>
-                                        <p className="general-info-overview">{showInfo.overview}</p>
-                                        <p className="general-info-rating">IMDB {showInfo.vote_average}</p>
-                                        <p className="general-info-add-favorites">add to favorites</p>
-                                    </div>
-                                     } 
+                                    }
                                 </div>
 
                             </div>
@@ -123,5 +114,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    { sortBy, setResult, openInfo }
+    { sortBy, setResult, openInfo, setPage }
 )(Homepage);

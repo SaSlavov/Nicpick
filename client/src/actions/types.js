@@ -8,3 +8,4 @@ export const SORT_BY = 'SORT_BY';
 export const SET_RESULT = 'SET_RESULT';
 export const OPEN_INFO = 'OPEN_INFO';
 export const SET_PAGE = 'SET_PAGE';
+export const SET_QUERY_STRING = 'SET_QUERY_STRING'

@@ -58,8 +58,8 @@ const Search = ({ active, search, searchType, filterGenres, filterByRating, filt
 
                     {GENRES.map((genre, index) => {
                         return (
-                            <div className="genre-container" onMouseEnter={() => setShowGenreExclude({index: index})} onMouseLeave={() => setShowGenreExclude(false)}>
-                                <p key={index} className={`genres-type ${search.genres.include.some(el => el === genre.code) ? 'include' : search.genres.exclude.some(el => el === genre.code) ? 'exclude' : ''}`}
+                            <div className="genre-container" key={index} onMouseEnter={() => setShowGenreExclude({index: index})} onMouseLeave={() => setShowGenreExclude(false)}>
+                                <p  className={`genres-type ${search.genres.include.some(el => el === genre.code) ? 'include' : search.genres.exclude.some(el => el === genre.code) ? 'exclude' : ''}`}
                                     onClick={() => !(search.genres.exclude.some(el => el === genre.code)) && filterGenres([genre.code, 'include'])}
                                 >{genre.name}</p>
                                 {showGenreExclude && showGenreExclude.index === index && !search.genres.include.some(el => el === genre.code) &&  <p className="exclude-genre-button"  onClick={() => !(search.genres.include.some(el => el === genre.code)) && filterGenres([genre.code, 'exclude'])}>X</p>}

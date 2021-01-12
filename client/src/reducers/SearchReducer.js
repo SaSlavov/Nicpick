@@ -1,11 +1,12 @@
-import { FILTER_COUNTRY, FILTER_GENRES, FILTER_RATING, FILTER_YEAR, SORT_BY } from "../actions/types";
+import { FILTER_COUNTRY, FILTER_GENRES, FILTER_RATING, FILTER_YEAR, SET_QUERY_STRING, SORT_BY } from "../actions/types";
 
 const initialState = {
     genres: {include: [], exclude: []},
     rating: 0,
     year: { start: '1950', end: '2021' },
     country: "en",
-    sortBy: "popularity.desc"
+    sortBy: "popularity.desc",
+    queryString: ""
 }
 
 export default (state = initialState, action) => {
@@ -24,6 +25,8 @@ export default (state = initialState, action) => {
             return { ...state, "country": action.payload };
         case SORT_BY:
             return { ...state, "sortBy": action.payload };
+        case SET_QUERY_STRING:
+            return { ...state, "queryString": action.payload };
         default:
             return state;
     }

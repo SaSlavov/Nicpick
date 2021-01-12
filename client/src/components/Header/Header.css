@@ -20,7 +20,7 @@
 }
 
 .search-input-container {
-    /* background-color: azure; */
+    display: flex;
 }
 
 .magnifying-glass-svg {
