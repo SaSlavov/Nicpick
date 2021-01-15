@@ -1,0 +1,70 @@
+.lists-container {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 60px;
+    background-color: #182130;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.list-container {
+    position: relative;
+    left: 13%;
+    /* background-color: cadetblue; */
+    width: 80%;
+    height: auto;
+    margin-top: 20px;
+}
+
+.list-header-container {
+}
+
+
+.list-header-container p {
+    margin: 0;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    border-radius: 5px;
+    color: #fff;
+    height: auto;
+    text-align: left;
+    background-color:#6b75fd3d;
+    /* background-color: rgba(255, 255, 255, 0.048); */
+    
+}
+
+.list-table {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.list-table th {
+    height: 42px;
+    background-color: #4e30d6;
+}
+
+.list-table td {
+    height: 35px;
+}
+
+.list-table tr td:nth-child(2) {
+    width: 300px;
+    cursor: pointer;
+}
+
+.list-table tr:nth-child(even) {
+    /* background-color: rgba(255, 255, 255, 0.192); */
+    background-color: #6b75fd6c;
+}
+.list-table tr:nth-child(odd) {
+    /* background-color: rgba(255, 255, 255, 0.192); */
+    background-color: #6b75fd8a;
+}
+
+.list-table tr:hover {
+    background-color: #6b75fdaf;
+} 

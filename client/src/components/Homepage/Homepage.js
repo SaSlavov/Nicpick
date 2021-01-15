@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { connect } from 'react-redux';
-import query from '../../apis/tmbd.js'
 import Dropdown from '../Search/SearchComponents/Dropdown/Dropdown.js';
 import { sortBy, setResult, openInfo, setPage } from '../../actions/'
 import './Homepage.css'

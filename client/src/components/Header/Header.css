@@ -17,6 +17,7 @@
     width: 120px;
     height: 30px;
     align-self: center;
+    cursor: pointer;
 }
 
 .search-input-container {
