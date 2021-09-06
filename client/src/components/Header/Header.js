@@ -20,6 +20,14 @@ const Header = ({ searchMovies, setQueryString, search, setResult, history }) =>
 
                 </form>
             </div>
+            <div className="profile-status-container">
+                <div className="register-button-container">
+                    
+                </div>
+                <div className="login-button-container">
+
+                </div>
+            </div>
         </div>
     );
 };
